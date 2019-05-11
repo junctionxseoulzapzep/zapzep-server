@@ -27,20 +27,22 @@ public class User {
     @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
     private List<GameResult> gameResult;
 
+    private String zepetoImageFile;
 
     protected User(){
 
     }
 
-    private User(String name, String hashCode){
+    private User(String name, String hashCode, String zepetoImageFile){
         this.name = name;
         this.hashCode = hashCode;
+        this.zepetoImageFile = zepetoImageFile;
     }
 
     public static User of(UserDto userDto){
-        return new User(userDto.getName(),userDto.getHashCode());
+        return new User(userDto.getName(),
+                userDto.getHashCode(),
+                userDto.getZepetoImageFile());
     }
-
-
 
 }

@@ -12,5 +12,6 @@ public class UserDto {
 
     private String name;
     private String hashCode;
+    private String zepetoImageFile;
 
 }
