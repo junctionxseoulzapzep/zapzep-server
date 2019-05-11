@@ -17,6 +17,7 @@ public class WebMvcConfig implements WebMvcConfigurer {
         registry.addInterceptor(this.interceptor)
                 .addPathPatterns("/api/**")
                 .excludePathPatterns("/api/users/join")
+                .excludePathPatterns("/api/users/zepeto/isTrue")
                 .excludePathPatterns("/swagger-ui.html")
                 .excludePathPatterns("/webjars/springfox-swagger-ui/**")
                 .excludePathPatterns("/swagger-resources/**")

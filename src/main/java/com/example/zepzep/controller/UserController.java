@@ -5,6 +5,7 @@ import com.example.zepzep.dto.ResponseDto;
 import com.example.zepzep.dto.TokenDto;
 import com.example.zepzep.dto.UserDto;
 import com.example.zepzep.service.UserService;
+import com.example.zepzep.utils.HttpConnector;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
@@ -26,6 +27,15 @@ public class UserController {
     public ResponseDto<User> getUserById(@PathVariable("id") long id){
         User user = userService.getUserById(id);
         return ResponseDto.of(HttpStatus.OK, "success get user by id", user);
+    }
+
+    @GetMapping("/users/zepeto/isTrue")
+    public ResponseDto checkUserZepetoCodeIsValid(@RequestParam(value = "zepeto")String zepetoHashCode){
+
+        boolean isZepetoValid = HttpConnector.isZepetoValid(zepetoHashCode);
+        return isZepetoValid ?
+                ResponseDto.of(HttpStatus.OK, "it is valid zepeto hashcode") :
+                ResponseDto.of(HttpStatus.NO_CONTENT, "it is not valid zepeto hashcode");
     }
 
 }

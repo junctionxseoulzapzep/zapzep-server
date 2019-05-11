@@ -50,5 +50,21 @@ public class HttpConnector {
         return body;
     }
 
+    public static boolean isZepetoValid(String hashCode) {
+
+        try {
+            HttpClient client = HttpClientBuilder.create().build(); // HttpClient 생성
+            HttpGet getRequest = new HttpGet("http://47.74.149.35/api/photo/7AgVQtSjIQzvYFBqnbQvpp/?hashCodes="+hashCode); //GET 메소드 URL 생성
+            HttpResponse response = client.execute(getRequest);
+
+            return response.getStatusLine().getStatusCode() == 200;
+
+        } catch (Exception e) {
+            log.error(e.toString());
+            return false;
+        }
+
+    }
+
 
 }
