@@ -15,8 +15,8 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class GameServiceImpl implements GameService {
 
-    private static GameResultRepository gameResultRepository;
-    private static UserRepository userRepository;
+    private final GameResultRepository gameResultRepository;
+    private final UserRepository userRepository;
 
     @Transactional
     public void saveGameResult(Long userId, GameResultDto gameResultDto){
