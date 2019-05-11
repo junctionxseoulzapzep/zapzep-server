@@ -7,6 +7,7 @@ import com.example.zepzep.service.UserService;
 import com.example.zepzep.utils.JwtFactory;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
@@ -16,6 +17,7 @@ public class UserServiceImpl implements UserService {
     private final JwtFactory jwtFactory;
 
     @Override
+    @Transactional
     public String createUser(UserDto userDto){
         User user = User.of(userDto);
         this.userRepository.save(user);

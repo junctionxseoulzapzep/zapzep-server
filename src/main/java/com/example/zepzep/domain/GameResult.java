@@ -1,5 +1,7 @@
 package com.example.zepzep.domain;
 
+import com.example.zepzep.dto.GameResultDto;
+
 import javax.persistence.*;
 
 @Entity
@@ -18,5 +20,15 @@ public class GameResult {
 
     @Enumerated(EnumType.STRING)
     private LandMark landMark;
+
+    private GameResult(Integer score, LandMark landMark ,User user){
+        this.score = score;
+        this.landMark = landMark;
+        this.user = user;
+    }
+
+    public static GameResult of(GameResultDto gameResultDto, User user){
+        return new GameResult(gameResultDto.getScore(),gameResultDto.getLandMark(),user);
+    }
 
 }
