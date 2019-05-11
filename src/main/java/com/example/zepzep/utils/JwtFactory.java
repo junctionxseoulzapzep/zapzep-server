@@ -5,26 +5,27 @@ import com.auth0.jwt.JWTVerifier;
 import com.auth0.jwt.algorithms.Algorithm;
 import com.auth0.jwt.interfaces.Claim;
 import com.auth0.jwt.interfaces.DecodedJWT;
+import com.auth0.jwt.interfaces.Verification;
 import com.example.zepzep.domain.User;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 import org.springframework.util.StringUtils;
 
 import java.util.Map;
 import java.util.Optional;
 
-import static ch.qos.logback.classic.PatternLayout.HEADER_PREFIX;
-
 @Slf4j
 @RequiredArgsConstructor
 @Component
 public class JwtFactory {
 
+    @Value("jwt.tokenIssuer")
     private String tokenIssuer;
+    @Value("jwt.tokenSigningKey")
     private String tokenSigningKey;
-    private JWTVerifier jwtVerifier;
-
+    public static final String HEADER_PREFIX = "Bearer ";
 
     public String generateToken(User user) {
         String token;
@@ -64,7 +65,9 @@ public class JwtFactory {
 
         DecodedJWT decodedJWT;
         try {
-            decodedJWT = this.jwtVerifier.verify(token);
+            Verification verification = JWT.require(Algorithm.HMAC256(tokenSigningKey));
+            JWTVerifier verifier = verification.build();
+            decodedJWT = verifier.verify(token);
         } catch (Exception e) {
             return Optional.empty();
         }

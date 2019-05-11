@@ -1,8 +1,13 @@
 package com.example.zepzep.dto;
 
-import lombok.Value;
+import lombok.AllArgsConstructor;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
 
-@Value
+//@Value
+@AllArgsConstructor
+@NoArgsConstructor
+@Getter
 public class UserDto {
 
     private String name;
