@@ -38,7 +38,7 @@ public class GameController {
 
     @GetMapping("winner")
     public ResponseDto getWinnerOfSpecificLandMark(@RequestAttribute Long id,
-                                                   @Param("landMarkName") String landMarkName){
+                                                   @RequestParam(value="landmark", required = true) String landMarkName){
 
         RankerDto rankerDto = gameService.getLandmarksRanker(LandMark.getLandMarkByName(landMarkName));
         return ResponseDto.of(HttpStatus.OK, "landmark winner 탐색 완료", rankerDto);
