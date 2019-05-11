@@ -1,9 +1,8 @@
 package com.example.zepzep.controller;
 
-import com.example.zepzep.domain.LandMark;
+import com.example.zepzep.domain.GameResult;
 import com.example.zepzep.dto.GameResultDto;
 import com.example.zepzep.dto.QuoteDto;
-import com.example.zepzep.dto.RankerDto;
 import com.example.zepzep.dto.ResponseDto;
 import com.example.zepzep.service.GameService;
 import lombok.RequiredArgsConstructor;
@@ -34,9 +33,10 @@ public class GameController {
 
     @GetMapping("winner")
     public ResponseDto getWinnerOfSpecificLandMark(@RequestAttribute Long id,
-                                                   @RequestParam(value="landmark", required = true) String landMarkName){
+                                                   @RequestParam("landMarkName") String landMarkName){
 
-        RankerDto rankerDto = this.gameService.getLandmarksRanker(LandMark.getLandMarkByName(landMarkName));
-        return ResponseDto.of(HttpStatus.OK, "landmark winner 탐색 완료", rankerDto);
+        System.out.println(landMarkName);
+        GameResultDto gameResultDto = gameService.getLandmarksRanker(landMarkName);
+        return ResponseDto.of(HttpStatus.OK, "landmark winner 탐색 완료", gameResultDto);
     }
 }

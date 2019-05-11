@@ -5,4 +5,5 @@ import com.example.zepzep.domain.LandMark;
 import org.springframework.data.jpa.repository.JpaRepository;
 
 public interface GameResultRepository extends JpaRepository<GameResult,Long> {
+    GameResult findFirstByLandMarkOrderByScoreDesc(String landMark);
 }

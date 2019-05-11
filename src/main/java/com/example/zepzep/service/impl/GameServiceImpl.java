@@ -3,11 +3,8 @@ package com.example.zepzep.service.impl;
 import com.example.zepzep.domain.*;
 import com.example.zepzep.dto.GameResultDto;
 import com.example.zepzep.dto.QuoteDto;
-import com.example.zepzep.dto.RankerDto;
-import com.example.zepzep.exception.NotFoundException;
 import com.example.zepzep.exception.UnauthorizedException;
 import com.example.zepzep.repository.GameResultRepository;
-import com.example.zepzep.repository.RankerRepository;
 import com.example.zepzep.repository.UserRepository;
 import com.example.zepzep.service.GameService;
 import com.example.zepzep.utils.HttpConnector;
@@ -18,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
@@ -27,7 +23,6 @@ public class GameServiceImpl implements GameService {
 
     private final GameResultRepository gameResultRepository;
     private final UserRepository userRepository;
-    private final RankerRepository rankerRepository;
     private final HttpConnector httpConnector;
 
     @Transactional
@@ -36,24 +31,34 @@ public class GameServiceImpl implements GameService {
                 .orElseThrow(UnauthorizedException::new);
 
         gameResultRepository.save(GameResult.of(gameResultDto, user));
-
-        validateRanker(gameResultDto, user);
+//
+//
+//
+//        GameResult gameResult = gameResultRepository
+//
+//
+//        validateRanker(gameResultDto, user);
     }
 
-    public void validateRanker(GameResultDto myGameResultDto, User user){
-        Ranker topRanker = rankerRepository.
-                findByLandMark(myGameResultDto.getLandMark())
-                .orElse(rankerRepository.save(Ranker.of(myGameResultDto, user)));
-        if(topRanker.getScore() < myGameResultDto.getScore()){
-            topRanker.setScore(myGameResultDto.getScore());
-        }
-    }
+//    public void validateRanker(GameResultDto myGameResultDto, User user){
+//        Ranker topRanker = rankerRepository.
+//                findByLandMark(myGameResultDto.getLandMark())
+//                .orElse(rankerRepository.save(Ranker.of(myGameResultDto, user)));
+//        if(topRanker.getScore() < myGameResultDto.getScore()){
+//            topRanker.setScore(myGameResultDto.getScore());
+//        }
+//    }
+//
+//    @Transactional
+//    public RankerDto getLandmarksRanker(LandMark landMark){
+//        Ranker ranker = rankerRepository.findByLandMark(landMark)
+//                .orElseThrow(NotFoundException::new);
+//        return RankerDto.of(ranker);
+//    }
 
-    @Transactional
-    public RankerDto getLandmarksRanker(LandMark landMark){
-        Ranker ranker = rankerRepository.findByLandMark(landMark)
-                .orElseThrow(NotFoundException::new);
-        return RankerDto.of(ranker);
+    public GameResultDto getLandmarksRanker(String landMark){
+        GameResult topUser = gameResultRepository.findFirstByLandMarkOrderByScoreDesc(landMark);
+        return GameResultDto.of(topUser, topUser.getUser());
     }
 
     @Override
