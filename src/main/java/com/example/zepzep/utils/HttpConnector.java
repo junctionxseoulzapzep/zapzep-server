@@ -1,51 +1,54 @@
 package com.example.zepzep.utils;
 
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.HttpURLConnection;
-import java.net.URL;
 
+import lombok.RequiredArgsConstructor;
+import lombok.extern.slf4j.Slf4j;
+import org.apache.http.HttpResponse;
+import org.apache.http.client.HttpClient;
+import org.apache.http.client.ResponseHandler;
+import org.apache.http.client.methods.HttpGet;
+import org.apache.http.impl.client.BasicResponseHandler;
+import org.apache.http.impl.client.HttpClientBuilder;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.stereotype.Component;
+
+@Slf4j
+@RequiredArgsConstructor
+@Component
 public class HttpConnector {
 
+    @Value("${rapid.api.key}")
+    public String rapidAPiKey;
 
-    public static String httpConnection(String targetUrl) {
-        URL url = null;
-        HttpURLConnection conn = null;
-        String jsonData = "";
-        BufferedReader br = null;
-        StringBuffer sb = null;
-        String returnText = "";
+
+    public String getFamousQuote() {
+
+        String body = "";
 
         try {
-            url = new URL(targetUrl);
+            HttpClient client = HttpClientBuilder.create().build(); // HttpClient 생성
+            HttpGet getRequest = new HttpGet("https://andruxnet-random-famous-quotes.p.rapidapi.com/?count=5"); //GET 메소드 URL 생성
+            getRequest.addHeader("X-RapidAPI-Host", "andruxnet-random-famous-quotes.p.rapidapi.com");
+            getRequest.addHeader("X-RapidAPI-Key", rapidAPiKey);
 
-            conn = (HttpURLConnection) url.openConnection();
-            conn.setRequestProperty("Accept", "application/json");
-            conn.setRequestMethod("GET");
-            conn.connect();
+            HttpResponse response = client.execute(getRequest);
 
-            br = new BufferedReader(new InputStreamReader(conn.getInputStream(), "UTF-8"));
-
-            sb = new StringBuffer();
-
-            while ((jsonData = br.readLine()) != null) {
-                sb.append(jsonData);
+            //Response 출력
+            if (response.getStatusLine().getStatusCode() == 200) {
+                ResponseHandler<String> handler = new BasicResponseHandler();
+                body = handler.handleResponse(response);
+                System.out.println(body);
+            } else {
+                log.error("response is error : " + response.getStatusLine().getStatusCode());
+                log.error("response is error : " + response.getEntity().toString());
+                response.getEntity();
             }
 
-            returnText = sb.toString();
-
-        } catch (IOException e) {
-            e.printStackTrace();
-        } finally {
-            try {
-                if (br != null) br.close();
-            } catch (IOException e) {
-                e.printStackTrace();
-            }
+        } catch (Exception e) {
+            log.error(e.toString());
         }
 
-        return returnText;
+        return body;
     }
 
 
