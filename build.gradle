@@ -32,4 +32,17 @@ dependencies {
     compile group: 'io.springfox', name: 'springfox-swagger-ui', version: '2.9.2'
 
     compile group: 'com.auth0', name: 'java-jwt', version: '3.7.0'
+
+    //socket
+    compile('org.springframework.boot:spring-boot-starter-websocket')
+    compile("org.webjars:webjars-locator-core")
+    compile("org.webjars:sockjs-client:1.0.2")
+    compile("org.webjars:stomp-websocket:2.3.3")
+    compile("org.webjars:bootstrap:3.3.7")
+    compile("org.webjars:jquery:3.1.0")
+
+    //query dsl
+    compile "com.mysema.querydsl:querydsl-jpa:3.6.3"
+    compile "com.mysema.querydsl:querydsl-apt:3.6.3:jpa"
+    compile group: 'com.infobip', name: 'infobip-spring-data-jpa-querydsl', version: '2.0.1'
 }
