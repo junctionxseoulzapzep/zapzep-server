@@ -30,7 +30,7 @@ public class LocationController {
         return this.locationService.getUsers(message,id);
     }
 
-    @PostMapping("api/get_location/{userId}")
+    @PostMapping("api/get_location")
     public List<UserLocationDto> getLocationUseRest(@RequestAttribute Long id,
                                                     @RequestBody UserLocationMessage message) {
 
