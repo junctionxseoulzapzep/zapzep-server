@@ -1,10 +1,16 @@
 package com.example.zepzep.controller;
 
+import com.example.zepzep.domain.GameResult;
+import com.example.zepzep.domain.LandMark;
+import com.example.zepzep.domain.Ranker;
 import com.example.zepzep.dto.GameResultDto;
 import com.example.zepzep.dto.QuoteDto;
+import com.example.zepzep.dto.RankerDto;
 import com.example.zepzep.dto.ResponseDto;
 import com.example.zepzep.service.GameService;
+import com.sun.javafx.css.parser.LadderConverter;
 import lombok.RequiredArgsConstructor;
+import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -13,14 +19,9 @@ import java.util.List;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("api")
+@RequestMapping("api/game")
 public class GameController {
     private final GameService gameService;
-
-    @GetMapping("test")
-    public ResponseDto testGet() {
-        return ResponseDto.of(HttpStatus.OK, "getMappingOK");
-    }
 
     @PostMapping
     public ResponseDto saveGameResult(@RequestAttribute Long id,
@@ -33,5 +34,13 @@ public class GameController {
     public ResponseDto getRandomTenQuoteList(@RequestAttribute Long id) throws IOException {
         List<QuoteDto> quotes = this.gameService.getRandomTenQuoteList(id);
         return ResponseDto.of(HttpStatus.OK, "Get 10 quote list", quotes);
+    }
+
+    @GetMapping("winner")
+    public ResponseDto getWinnerOfSpecificLandMark(@RequestAttribute Long id,
+                                                   @Param("landMarkName") String landMarkName){
+
+        RankerDto rankerDto = gameService.getLandmarksRanker(LandMark.getLandMarkByName(landMarkName));
+        return ResponseDto.of(HttpStatus.OK, "landmark winner 탐색 완료", rankerDto);
     }
 }

@@ -2,17 +2,23 @@ package com.example.zepzep.domain;
 
 import com.example.zepzep.dto.GameResultDto;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import javax.persistence.*;
 
 @Entity
 @Getter
-public class GameResult {
+@Setter
+@NoArgsConstructor
+public class Ranker {
 
     @Id
     @GeneratedValue
-    @Column(name = "game_id")
     private Long id;
+
+    @Enumerated(EnumType.STRING)
+    private LandMark landMark;
 
     private Integer score;
 
@@ -20,17 +26,13 @@ public class GameResult {
     @JoinColumn(name = "user_id")
     private User user;
 
-    @Enumerated(EnumType.STRING)
-    private LandMark landMark;
-
-    private GameResult(Integer score, LandMark landMark ,User user){
+    private Ranker(Integer score, LandMark landMark ,User user){
         this.score = score;
         this.landMark = landMark;
         this.user = user;
     }
 
-    public static GameResult of(GameResultDto gameResultDto, User user){
-        return new GameResult(gameResultDto.getScore(),gameResultDto.getLandMark(),user);
+    public static Ranker of(GameResultDto gameResultDto, User user){
+        return new Ranker(gameResultDto.getScore(),gameResultDto.getLandMark(),user);
     }
-
 }
