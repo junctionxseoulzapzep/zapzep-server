@@ -41,8 +41,4 @@ dependencies {
     compile("org.webjars:bootstrap:3.3.7")
     compile("org.webjars:jquery:3.1.0")
 
-    //query dsl
-    compile "com.mysema.querydsl:querydsl-jpa:3.6.3"
-    compile "com.mysema.querydsl:querydsl-apt:3.6.3:jpa"
-    compile group: 'com.infobip', name: 'infobip-spring-data-jpa-querydsl', version: '2.0.1'
 }
