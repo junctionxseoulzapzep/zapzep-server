@@ -1,16 +1,12 @@
 package com.example.zepzep.controller;
 
-import com.example.zepzep.domain.GameResult;
 import com.example.zepzep.domain.LandMark;
-import com.example.zepzep.domain.Ranker;
 import com.example.zepzep.dto.GameResultDto;
 import com.example.zepzep.dto.QuoteDto;
 import com.example.zepzep.dto.RankerDto;
 import com.example.zepzep.dto.ResponseDto;
 import com.example.zepzep.service.GameService;
-import com.sun.javafx.css.parser.LadderConverter;
 import lombok.RequiredArgsConstructor;
-import org.springframework.data.repository.query.Param;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
@@ -40,7 +36,7 @@ public class GameController {
     public ResponseDto getWinnerOfSpecificLandMark(@RequestAttribute Long id,
                                                    @RequestParam(value="landmark", required = true) String landMarkName){
 
-        RankerDto rankerDto = gameService.getLandmarksRanker(LandMark.getLandMarkByName(landMarkName));
+        RankerDto rankerDto = this.gameService.getLandmarksRanker(LandMark.getLandMarkByName(landMarkName));
         return ResponseDto.of(HttpStatus.OK, "landmark winner 탐색 완료", rankerDto);
     }
 }
