@@ -9,7 +9,6 @@ import org.apache.http.client.ResponseHandler;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.BasicResponseHandler;
 import org.apache.http.impl.client.HttpClientBuilder;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
 
 @Slf4j
@@ -17,8 +16,8 @@ import org.springframework.stereotype.Component;
 @Component
 public class HttpConnector {
 
-    @Value("${rapid.api.key}")
-    public String rapidAPiKey;
+    //@Value("${rapid.api.key}")
+    public static String rapidAPiKey = "49f290f37emsh769ec00e95f1456p19e0c8jsn8e2351eb3917";
 
 
     public String getFamousQuote() {
