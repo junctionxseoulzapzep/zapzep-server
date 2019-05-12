@@ -1,6 +1,5 @@
 package com.example.zepzep.controller;
 
-import com.example.zepzep.domain.GameResult;
 import com.example.zepzep.dto.GameResultDto;
 import com.example.zepzep.dto.QuoteDto;
 import com.example.zepzep.dto.ResponseDto;
@@ -26,17 +25,17 @@ public class GameController {
     }
 
     @GetMapping("quote")
-    public ResponseDto getRandomTenQuoteList(@RequestAttribute Long id) throws IOException {
+    public ResponseDto<List<QuoteDto>> getRandomTenQuoteList(@RequestAttribute Long id) throws IOException {
         List<QuoteDto> quotes = this.gameService.getRandomTenQuoteList(id);
         return ResponseDto.of(HttpStatus.OK, "Get 10 quote list", quotes);
     }
 
     @GetMapping("winner")
-    public ResponseDto getWinnerOfSpecificLandMark(@RequestAttribute Long id,
+    public ResponseDto<GameResultDto> getWinnerOfSpecificLandMark(@RequestAttribute Long id,
                                                    @RequestParam("landMarkName") String landMarkName){
 
         System.out.println(landMarkName);
-        GameResultDto gameResultDto = gameService.getLandmarksRanker(landMarkName);
+        GameResultDto gameResultDto = this.gameService.getLandmarksRanker(landMarkName);
         return ResponseDto.of(HttpStatus.OK, "landmark winner 탐색 완료", gameResultDto);
     }
 }

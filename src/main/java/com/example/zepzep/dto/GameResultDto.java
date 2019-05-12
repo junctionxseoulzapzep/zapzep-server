@@ -12,7 +12,6 @@ import lombok.NoArgsConstructor;
 public class GameResultDto {
     private Integer score;
     private String landMark;
-    //    private String name;
     private String name;
     private String zepeto;
 
