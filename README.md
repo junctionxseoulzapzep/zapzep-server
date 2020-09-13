@@ -1,4 +1,4 @@
-# zepzap-server
+![o](/original.png)
 
 ## Hacakthon mission
 - Jepeto Graphic API
@@ -34,3 +34,6 @@ ZepZappers can also conquer landmarks while they're wandering around. When they 
 ## Why is it called ZepZap?
 One significant aspect of our application is the uniquely carefree and fun interaction that comes from using ZEPETO avatars, hence the "Zep." "Zap" symbolizes the simple yet entertaining nature of these interactions and the process of conquering landmarks.
 Most importantly, ZepZap is a cute, fun name.
+
+
+https://devpost.com/software/zepzap-rctd96
